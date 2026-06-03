@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://conceited-wears-backend.onrender.com/api';
+
 export default function Shop() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/products/')
+    axios.get(`${API_URL}/products/`)
       .then((res) => {
         setProducts(res.data);
         setLoading(false);

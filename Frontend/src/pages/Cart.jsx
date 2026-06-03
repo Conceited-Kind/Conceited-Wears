@@ -2,6 +2,8 @@ import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://conceited-wears-backend.onrender.com/api';
+
 export default function Cart() {
   const { cart, removeFromCart, clearCart } = useCart();
   const [phone, setPhone] = useState('');
@@ -17,7 +19,7 @@ export default function Cart() {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:8000/api/stk-push/', {
+      const res = await axios.post(`${API_URL}/stk-push/`, {
         phone,
         amount: total,
         order_id: Date.now()
