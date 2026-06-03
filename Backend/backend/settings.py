@@ -2,13 +2,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-conceited-wears-2026-secret-key-change-in-production')
-
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
@@ -27,6 +25,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,6 +68,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -78,12 +78,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:5174",
-    "http://127.0.0.1:5174"
+    "http://127.0.0.1:5174",
 ]
 
-# === DARAJA MPESA SANDBOX CREDENTIALS (from .env file) ===
-MPESA_CONSUMER_KEY = os.environ.get('MPESA_CONSUMER_KEY')
-MPESA_CONSUMER_SECRET = os.environ.get('MPESA_CONSUMER_SECRET')
-MPESA_PASSKEY = os.environ.get('MPESA_PASSKEY')
-MPESA_SHORTCODE = os.environ.get('MPESA_SHORTCODE')
-MPESA_CALLBACK_URL = os.environ.get('MPESA_CALLBACK_URL')
+# === DARAJA MPESA ===
+MPESA_CONSUMER_KEY = os.environ.get('MPESA_CONSUMER_KEY', '')
+MPESA_CONSUMER_SECRET = os.environ.get('MPESA_CONSUMER_SECRET', '')
+MPESA_PASSKEY = os.environ.get('MPESA_PASSKEY', '')
+MPESA_SHORTCODE = os.environ.get('MPESA_SHORTCODE', '174379')
+MPESA_CALLBACK_URL = os.environ.get('MPESA_CALLBACK_URL', '')
